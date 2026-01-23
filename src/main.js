@@ -49,12 +49,11 @@ export const TerminatorApplication = GObject.registerClass(
                 const aboutParams = {
                     application_name: 'terminator',
                     application_icon: 'org.ramez.terminator',
-                    developer_name: 'Unknown',
+                    developer_name: 'Ramez Medhat',
                     version: '0.1.0',
                     developers: [
-                        'Unknown'
+                        'Ramez Medhat'
                     ],
-                    // Translators: Replace "translator-credits" with your name/username, and optionally an email or URL.
                     translator_credits: _("translator-credits"),
                     copyright: '© 2026 Ramez Medhat'
                 };
