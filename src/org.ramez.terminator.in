@@ -1,6 +1,8 @@
 #!@GJS@ -m
 
 import { exit, programArgs, programInvocationName } from "system";
+import Gio from "gi://Gio";
+import GLib from "gi://GLib";
 
 imports.package.init({
   name: "@PACKAGE_NAME@",
@@ -9,6 +11,18 @@ imports.package.init({
   libdir: "@libdir@",
   datadir: "@datadir@",
 });
+
+// Detect if running from build directory and load resources
+const buildDir = GLib.path_get_dirname(programInvocationName);
+const srcResource = GLib.build_filenamev([buildDir, 'org.ramez.terminator.src.gresource']);
+const dataResource = GLib.build_filenamev([buildDir, 'org.ramez.terminator.data.gresource']);
+
+if (GLib.file_test(srcResource, GLib.FileTest.EXISTS)) {
+    Gio.Resource.load(srcResource)._register();
+}
+if (GLib.file_test(dataResource, GLib.FileTest.EXISTS)) {
+    Gio.Resource.load(dataResource)._register();
+}
 
 const { main } = await import("resource://@resource_path@/js/main.js");
 const exit_code = await main([programInvocationName, ...programArgs]);
