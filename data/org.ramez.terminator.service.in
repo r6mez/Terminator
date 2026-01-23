@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=org.ramez.terminator
+Exec=@bindir@/org.ramez.terminator --gapplication-service

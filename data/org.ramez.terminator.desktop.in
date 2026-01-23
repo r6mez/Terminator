@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=terminator
+Exec=org.ramez.terminator
+Icon=org.ramez.terminator
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

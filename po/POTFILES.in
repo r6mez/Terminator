@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/org.ramez.terminator.desktop.in
+data/org.ramez.terminator.metainfo.xml.in
+data/org.ramez.terminator.gschema.xml
+src/main.js
+src/window.js
+src/window.ui
