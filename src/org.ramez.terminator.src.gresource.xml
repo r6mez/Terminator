@@ -3,5 +3,6 @@
   <gresource prefix="/org/ramez/terminator/js">
     <file>main.js</file>
     <file>window.js</file>
+    <file>appsList.js</file>
   </gresource>
 </gresources>

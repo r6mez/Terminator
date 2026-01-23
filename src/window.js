@@ -19,16 +19,18 @@
  */
 
 import GObject from 'gi://GObject';
-import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
+
+import { populateAppList } from './appsList.js';
 
 export const TerminatorWindow = GObject.registerClass({
     GTypeName: 'TerminatorWindow',
     Template: 'resource:///org/ramez/terminator/window.ui',
-    InternalChildren: ['label'],
+    InternalChildren: ['appsListBox'],
 }, class TerminatorWindow extends Adw.ApplicationWindow {
     constructor(application) {
         super({ application });
+        populateAppList(this._appsListBox);
     }
 });
 
