@@ -282,6 +282,18 @@ async function uninstallSnap(appName) {
     return true;
 }
 
+// currently only deletes the desktop file, but we could expand this in the future to also
+// remove associated files in ~/.local/share/applications and ~/.local/share/icons
+async function uninstallUserLocal(desktopFilePath) {
+    const file = Gio.File.new_for_path(desktopFilePath);
+    try {
+        file.delete(null);
+        return true;
+    } catch (e) {
+        throw new Error(`Failed to delete desktop file: ${e.message}`);
+    }
+}
+
 export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, onSuccess = null) {
     console.log(`Requesting uninstall for: ${desktopId}`);
     console.log(`Desktop file path: ${desktopFilePath}`);
@@ -290,17 +302,6 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
     console.log(`Detected app type: ${appType}`);
 
     // Check if we can uninstall this app type
-    if (appType === AppType.USER_LOCAL) {
-        const dialog = new Adw.MessageDialog({
-            transient_for: parentWindow,
-            heading: "Cannot Uninstall",
-            body: `${appName} is a locally installed app. Please remove it manually from ~/.local/share/applications/`,
-        });
-        dialog.add_response("ok", "OK");
-        dialog.present();
-        return;
-    }
-
     if (appType === AppType.UNKNOWN || !desktopFilePath) {
         const dialog = new Adw.MessageDialog({
             transient_for: parentWindow,
@@ -313,10 +314,14 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
     }
 
     try {
+        const dialogBody = appType === AppType.USER_LOCAL
+            ? `Are you sure you want to uninstall ${appName}? This will remove the launcher, but associated files may remain in your home directory.`
+            : `Are you sure you want to uninstall ${appName}?`;
+
         const dialog = new Adw.MessageDialog({
             transient_for: parentWindow,
             heading: "Uninstall Request",
-            body: `Are you sure you want to uninstall ${appName}?`,
+            body: dialogBody,
         });
 
         dialog.add_response("cancel", "Cancel");
@@ -345,6 +350,11 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
                             console.log("Uninstalling Snap...");
                             const snapName = getSnapName(desktopFilePath);
                             await uninstallSnap(snapName);
+                            break;
+
+                        case AppType.USER_LOCAL:
+                            console.log("Uninstalling user-local app...");
+                            await uninstallUserLocal(desktopFilePath);
                             break;
                     }
 
