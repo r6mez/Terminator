@@ -4,5 +4,6 @@
     <file>main.js</file>
     <file>window.js</file>
     <file>appsList.js</file>
+    <file>packageKit.js</file>
   </gresource>
 </gresources>
