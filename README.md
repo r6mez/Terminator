@@ -1,14 +1,8 @@
 # Terminator
 
-A friendly application manager for GNOME that helps you uninstall apps with ease.
-
-![Screenshot](assets/image.png)
-
-## About
-
 Terminator is a simple but powerful tool for managing installed applications on your GNOME desktop. Whether you installed an app through your system's package manager, Flatpak, or Snap, Terminator provides a unified interface to view and remove them all from one place.
 
-No more hunting through different tools or remembering different commands — just find the app you want to remove and click uninstall.
+![Screenshot](assets/image.png)
 
 ## Features
 
