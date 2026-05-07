@@ -5,13 +5,13 @@
   <project_license>GPL-3.0-or-later</project_license>
 
   <name>Terminator</name>
-  <summary>Keep the summary shorter, between 10 and 35 characters</summary>
+  <summary></summary>
   <description>
-    <p>No description</p>
+    <p>Unified linux uninstaller.</p>
   </description>
 
   <developer id="tld.vendor">
-    <name>Developer name</name>
+    <name>Ramez Medhat</name>
   </developer>
 
   <!-- Required: Should be a link to the upstream homepage for the component -->

@@ -1,34 +1,25 @@
-# Terminator
+![Banner](assets/banner.png)
 
-Terminator is a simple but powerful tool for managing installed applications on your GNOME desktop. Whether you installed an app through your system's package manager, Flatpak, or Snap, Terminator provides a unified interface to view and remove them all from one place.
-
-![Screenshot](assets/image.png)
+A simple but powerful tool for managing installed applications on your linux machine. Whether you installed an app through your system's package manager, Flatpak, or Snap, Terminator provides a unified interface to view and remove them all from one place.
 
 ## Features
 
-- **See all your apps** — Browse installed applications with their icons and identifiers
-- **Universal uninstaller** — Remove system packages, Flatpaks, and Snaps from the same interface
-- **Safe removal** — Confirmation dialogs prevent accidental uninstallations
-- **Secure by design** — Uses PackageKit and Polkit for authenticated system changes
-- **Native GNOME experience** — Built with GTK4 and libadwaita for a modern, consistent look
+- Browse installed applications with their icons and identifiers
+- Remove system packages, Flatpaks, and Snaps from the same interface
+- Confirmation and authentication dialogs prevent accidental uninstallations
 
 ## Installation
 
 ### Building from Source
 
-Terminator uses the Meson build system. To build and install:
-
 ```bash
 meson setup build
 meson compile -C build
+
+# either install the application on your system
 meson install -C build
-```
 
-Or run directly from the build directory without installing:
-
-```bash
-meson setup build
-meson compile -C build
+# or run directly from the build directory without installing
 ./build/src/org.ramez.terminator
 ```
 
@@ -45,7 +36,7 @@ You'll need these installed before building:
 - gtk4
 - libadwaita
 - packagekit (for uninstalling system packages)
-- A PolicyKit authentication agent like polkit-gnome (for authentication dialogs)
+- polkit-gnome (for authentication dialogs)
 
 #### Arch Linux
 

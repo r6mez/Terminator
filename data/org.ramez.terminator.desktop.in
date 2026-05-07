@@ -1,5 +1,5 @@
 [Desktop Entry]
-Name=terminator
+Name=Terminator
 Exec=org.ramez.terminator
 Icon=org.ramez.terminator
 Terminal=false
@@ -8,3 +8,4 @@ Categories=Utility;
 Keywords=GTK;
 StartupNotify=true
 DBusActivatable=true
+Comment="Unified linux uninstaller"

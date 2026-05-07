@@ -1,13 +1,9 @@
 application_id = 'org.ramez.terminator'
 
-scalable_dir = 'hicolor' / 'scalable' / 'apps'
-install_data(
-  scalable_dir / ('@0@.svg').format(application_id),
-  install_dir: get_option('datadir') / 'icons' / scalable_dir
-)
-
-symbolic_dir = 'hicolor' / 'symbolic' / 'apps'
-install_data(
-  symbolic_dir / ('@0@-symbolic.svg').format(application_id),
-  install_dir: get_option('datadir') / 'icons' / symbolic_dir
-)
+foreach size : ['128x128', '256x256', '512x512']
+  icon_dir = 'hicolor' / size / 'apps'
+  install_data(
+    icon_dir / ('@0@.png').format(application_id),
+    install_dir: get_option('datadir') / 'icons' / icon_dir
+  )
+endforeach
