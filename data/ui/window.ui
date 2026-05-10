@@ -47,6 +47,18 @@
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>
       </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">View on _GitHub</attribute>
+        <attribute name="action">app.github</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Donate</attribute>
+        <attribute name="action">app.donate</attribute>
+      </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_About Terminator</attribute>
         <attribute name="action">app.about</attribute>
