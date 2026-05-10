@@ -4,6 +4,7 @@
     <file>main.js</file>
     <file>ui/window.js</file>
     <file>ui/appsList.js</file>
+    <file>ui/scroll.js</file>
     <file>managers/index.js</file>
     <file>managers/snap.js</file>
     <file>managers/flatpak.js</file>
