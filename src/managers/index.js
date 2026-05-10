@@ -6,12 +6,14 @@ import { uninstallSnap } from './snap.js';
 import { uninstallFlatpak } from './flatpak.js';
 import { uninstallSystemPackage } from './systemPackage.js';
 import { uninstallUserLocal } from './userLocal.js';
+import { uninstallAppImage, isAppImage, resolveAppImageBinary } from './appImage.js';
 
 const AppType = {
     SYSTEM_PACKAGE: 'system-package',
     FLATPAK: 'flatpak',
     SNAP: 'snap',
     USER_LOCAL: 'user-local',
+    APPIMAGE: 'appimage',
     UNKNOWN: 'unknown'
 };
 
@@ -28,11 +30,66 @@ function classifyAppType(desktopFilePath) {
 
     if (info.has_key('X-Flatpak')) return AppType.FLATPAK;
     if (info.has_key('X-SnapInstanceName')) return AppType.SNAP;
+    if (isAppImage(desktopFilePath)) return AppType.APPIMAGE;
 
     const userDir = GLib.build_filenamev([GLib.get_user_data_dir(), 'applications']);
     if (desktopFilePath.startsWith(userDir)) return AppType.USER_LOCAL;
 
     return AppType.SYSTEM_PACKAGE;
+}
+
+function showResultDialog(parentWindow, success, appName, error = null) {
+    const dialog = new Adw.MessageDialog({
+        transient_for: parentWindow,
+        heading: success ? "Uninstall Complete" : "Uninstall Failed",
+        body: success
+            ? `${appName} has been successfully uninstalled.`
+            : `Could not uninstall ${appName}: ${error.message}`,
+    });
+    dialog.add_response("ok", "OK");
+    dialog.present();
+}
+
+function uninstallAppImageFlow(parentWindow, appName, desktopFilePath, onSuccess) {
+    const binaryPath = resolveAppImageBinary(desktopFilePath);
+
+    const lines = [
+        `Uninstall ${appName}?`,
+        '',
+        `Launcher: ${desktopFilePath}`,
+    ];
+    if (binaryPath) lines.push(`AppImage: ${binaryPath}`);
+    else lines.push('AppImage binary could not be located in your home directory; only the launcher will be removed.');
+
+    const dialog = new Adw.MessageDialog({
+        transient_for: parentWindow,
+        heading: "Uninstall AppImage",
+        body: lines.join('\n'),
+    });
+
+    dialog.add_response("cancel", "Cancel");
+    dialog.add_response("launcher", "Remove launcher only");
+    if (binaryPath) {
+        dialog.add_response("both", "Remove launcher and AppImage");
+        dialog.set_response_appearance("both", Adw.ResponseAppearance.DESTRUCTIVE);
+    } else {
+        dialog.set_response_appearance("launcher", Adw.ResponseAppearance.DESTRUCTIVE);
+    }
+
+    dialog.connect('response', async (_self, response) => {
+        if (response === 'cancel') return;
+        const removeBinary = response === 'both';
+        try {
+            await uninstallAppImage(desktopFilePath, { removeBinary, binaryPath });
+            if (onSuccess) onSuccess();
+            showResultDialog(parentWindow, true, appName);
+        } catch (e) {
+            console.error("AppImage uninstall failed:", e);
+            showResultDialog(parentWindow, false, appName, e);
+        }
+    });
+
+    dialog.present();
 }
 
 export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, onSuccess = null) {
@@ -49,6 +106,11 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
         });
         dialog.add_response("ok", "OK");
         dialog.present();
+        return;
+    }
+
+    if (appType === AppType.APPIMAGE) {
+        uninstallAppImageFlow(parentWindow, appName, desktopFilePath, onSuccess);
         return;
     }
 
@@ -72,26 +134,11 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
         try {
             await UNINSTALLERS[appType](desktopFilePath);
             console.log(`Successfully uninstalled ${appName}`);
-
             if (onSuccess) onSuccess();
-
-            const successDialog = new Adw.MessageDialog({
-                transient_for: parentWindow,
-                heading: "Uninstall Complete",
-                body: `${appName} has been successfully uninstalled.`,
-            });
-            successDialog.add_response("ok", "OK");
-            successDialog.present();
+            showResultDialog(parentWindow, true, appName);
         } catch (e) {
             console.error("Uninstall failed:", e);
-
-            const errorDialog = new Adw.MessageDialog({
-                transient_for: parentWindow,
-                heading: "Uninstall Failed",
-                body: `Could not uninstall ${appName}: ${e.message}`,
-            });
-            errorDialog.add_response("ok", "OK");
-            errorDialog.present();
+            showResultDialog(parentWindow, false, appName, e);
         }
     });
 

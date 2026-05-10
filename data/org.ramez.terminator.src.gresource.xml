@@ -9,5 +9,6 @@
     <file>managers/flatpak.js</file>
     <file>managers/systemPackage.js</file>
     <file>managers/userLocal.js</file>
+    <file>managers/appImage.js</file>
   </gresource>
 </gresources>
