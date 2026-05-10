@@ -1,6 +1,8 @@
 import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 
+Gio._promisify(Gio.Subprocess.prototype, 'wait_async', 'wait_finish');
+
 // /var/lib/flatpak/exports/share/applications/org.gnome.Calculator.desktop
 // -> org.gnome.Calculator
 function getFlatpakAppId(desktopFilePath) {
@@ -8,38 +10,24 @@ function getFlatpakAppId(desktopFilePath) {
     return basename.replace('.desktop', '');
 }
 
-function runSubprocess(args) {
-    return new Promise((resolve, reject) => {
-        try {
-            const subprocess = Gio.Subprocess.new(
-                args,
-                Gio.SubprocessFlags.STDOUT_SILENCE | Gio.SubprocessFlags.STDERR_SILENCE
-            );
+async function runSubprocess(args) {
+    const flags = Gio.SubprocessFlags.STDOUT_SILENCE | Gio.SubprocessFlags.STDERR_SILENCE;
+    const subprocess = Gio.Subprocess.new(args, flags);
+    await subprocess.wait_async(null);
+    return subprocess.get_successful();
+}
 
-            subprocess.wait_async(null, (proc, result) => {
-                try {
-                    proc.wait_finish(result);
-                    resolve(proc.get_successful());
-                } catch (e) {
-                    reject(e);
-                }
-            });
-        } catch (e) {
-            reject(e);
-        }
-    });
+function getFlatpakScope(desktopFilePath) {
+    const userPrefix = GLib.build_filenamev([GLib.get_home_dir(), '.local/share/flatpak/']);
+    return desktopFilePath.startsWith(userPrefix) ? '--user' : '--system';
 }
 
 export async function uninstallFlatpak(desktopFilePath) {
     const appId = getFlatpakAppId(desktopFilePath);
+    const scope = getFlatpakScope(desktopFilePath);
 
-    // Try user installation first
-    const userSuccess = await runSubprocess(['flatpak', 'uninstall', '--user', '-y', appId]);
-    if (userSuccess) return true;
-
-    // Try system installation
-    const systemSuccess = await runSubprocess(['pkexec', 'flatpak', 'uninstall', '--system', '-y', appId]);
-    if (systemSuccess) return true;
+    const success = await runSubprocess(['flatpak', 'uninstall', scope, '-y', appId]);
+    if (success) return true;
 
     throw new Error('Flatpak uninstall failed. The app may not be installed.');
 }
