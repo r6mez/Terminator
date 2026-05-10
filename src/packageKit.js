@@ -109,6 +109,29 @@ function runSubprocess(args) {
     });
 }
 
+async function isPackageKitAvailable() {
+    try {
+        const connection = Gio.bus_get_sync(Gio.BusType.SYSTEM, null);
+
+        const startReply = await dbusCallAsync(
+            connection,
+            'org.freedesktop.DBus',
+            '/org/freedesktop/DBus',
+            'org.freedesktop.DBus',
+            'StartServiceByName',
+            new GLib.Variant('(su)', [PACKAGEKIT_BUS_NAME, 0]),
+            new GLib.VariantType('(u)')
+        );
+
+        // 1 = DBUS_START_REPLY_SUCCESS, 2 = DBUS_START_REPLY_ALREADY_RUNNING
+        const code = startReply.get_child_value(0).get_uint32();
+        return code === 1 || code === 2;
+    } catch (e) {
+        console.warn('PackageKit availability check failed:', e.message);
+        return false;
+    }
+}
+
 async function createTransaction() {
     const connection = Gio.bus_get_sync(Gio.BusType.SYSTEM, null);
 
@@ -330,6 +353,9 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
                 try {
                     switch (appType) {
                         case AppType.SYSTEM_PACKAGE:
+                            if (!(await isPackageKitAvailable())) {
+                                throw new Error('PackageKit is not available on this system. Install and enable the "packagekit" service to uninstall system packages.');
+                            }
                             console.log("Resolving package from desktop file...");
                             const packageId = await resolvePackageFromDesktop(desktopFilePath);
                             console.log(`Resolved package ID: ${packageId}`);
