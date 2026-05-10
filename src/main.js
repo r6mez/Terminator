@@ -61,6 +61,17 @@ export const TerminatorApplication = GObject.registerClass(
                 aboutDialog.present(this.active_window);
             });
             this.add_action(show_about_action);
+
+            this._addUriAction('github', 'https://github.com/r6mez/Terminator');
+            this._addUriAction('donate', 'https://github.com/sponsors/r6mez');
+        }
+
+        _addUriAction(name, uri) {
+            const action = new Gio.SimpleAction({ name });
+            action.connect('activate', () => {
+                Gtk.UriLauncher.new(uri).launch(this.active_window, null, null);
+            });
+            this.add_action(action);
         }
 
         vfunc_activate() {

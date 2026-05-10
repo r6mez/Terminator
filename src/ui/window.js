@@ -19,18 +19,66 @@
  */
 
 import GObject from 'gi://GObject';
+import Gdk from 'gi://Gdk';
+import Gtk from 'gi://Gtk';
 import Adw from 'gi://Adw';
 
 import { populateAppList } from './appsList.js';
+import { AppType } from '../managers/index.js';
+
+const FILTER_INDEX_TO_TYPE = [
+    null,
+    AppType.FLATPAK,
+    AppType.SNAP,
+    AppType.APPIMAGE,
+    AppType.SYSTEM_PACKAGE,
+    AppType.USER_LOCAL,
+    AppType.UNKNOWN,
+];
+
+let cssLoaded = false;
+function ensureCssLoaded() {
+    if (cssLoaded) return;
+    const provider = new Gtk.CssProvider();
+    provider.load_from_resource('/org/ramez/terminator/style.css');
+    Gtk.StyleContext.add_provider_for_display(
+        Gdk.Display.get_default(),
+        provider,
+        Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION
+    );
+    cssLoaded = true;
+}
 
 export const TerminatorWindow = GObject.registerClass({
     GTypeName: 'TerminatorWindow',
     Template: 'resource:///org/ramez/terminator/window.ui',
-    InternalChildren: ['appsListBox'],
+    InternalChildren: ['appsListBox', 'searchBar', 'searchEntry', 'typeFilterDropdown'],
 }, class TerminatorWindow extends Adw.ApplicationWindow {
     constructor(application) {
         super({ application });
+        ensureCssLoaded();
         populateAppList(this._appsListBox);
+
+        this._appsListBox.set_filter_func(row => this._rowMatches(row));
+
+        this._searchEntry.connect('search-changed', () => {
+            this._appsListBox.invalidate_filter();
+        });
+        this._typeFilterDropdown.connect('notify::selected', () => {
+            this._appsListBox.invalidate_filter();
+        });
+
+        this._searchBar.set_key_capture_widget(this);
+        this._searchBar.connect_entry(this._searchEntry);
+    }
+
+    _rowMatches(row) {
+        const selectedIdx = this._typeFilterDropdown.get_selected();
+        const wantedType = FILTER_INDEX_TO_TYPE[selectedIdx] ?? null;
+        if (wantedType && row.appType !== wantedType) return false;
+
+        const query = (this._searchEntry.get_text() ?? '').trim().toLowerCase();
+        if (!query) return true;
+        return (row.searchText ?? '').includes(query);
     }
 });
-

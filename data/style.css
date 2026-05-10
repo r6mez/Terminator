@@ -1,0 +1,46 @@
+.app-type-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    margin-right: 6px;
+    color: @theme_fg_color;
+    background-color: alpha(@theme_fg_color, 0.12);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* Adwaita accent palette */
+.app-type-badge.type-flatpak {
+    background-color: alpha(#3584e4, 0.10);
+    color: #1a5fb4;
+}
+
+.app-type-badge.type-snap {
+    background-color: alpha(#ff7800, 0.10);
+    color: #b5340c;
+}
+
+.app-type-badge.type-appimage {
+    background-color: alpha(#33d17a, 0.10);
+    color: #26a269;
+}
+
+.app-type-badge.type-system-package {
+    background-color: alpha(#9141ac, 0.10);
+    color: #813d9c;
+}
+
+.app-type-badge.type-user-local {
+    background-color: alpha(#2190a4, 0.10);
+    color: #1c7585;
+}
+
+.app-type-badge.type-unknown {
+    background-color: alpha(@theme_fg_color, 0.10);
+    color: alpha(@theme_fg_color, 0.65);
+}
+
+.filter-bar {
+    padding: 8px 12px;
+}

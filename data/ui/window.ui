@@ -10,6 +10,12 @@
       <object class="AdwToolbarView">
         <child type="top">
           <object class="AdwHeaderBar">
+            <child type="start">
+              <object class="GtkToggleButton" id="searchButton">
+                <property name="icon-name">system-search-symbolic</property>
+                <property name="tooltip-text" translatable="yes">Search</property>
+              </object>
+            </child>
             <child type="end">
               <object class="GtkMenuButton">
                 <property name="primary">True</property>
@@ -20,18 +26,63 @@
             </child>
           </object>
         </child>
-        <property name="content">
-          <object class="GtkScrolledWindow">
-            <property name="vexpand">True</property>
-            <property name="hscrollbar_policy">never</property>
-            <property name="child">
-              <object class="GtkListBox" id="appsListBox">
-                <property name="selection-mode">none</property>
-                <style>
-                  <class name="boxed-list"/>
-                </style>
+        <child type="top">
+          <object class="GtkSearchBar" id="searchBar">
+            <property name="search-mode-enabled" bind-source="searchButton" bind-property="active" bind-flags="bidirectional|sync-create"/>
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">horizontal</property>
+                <property name="spacing">6</property>
+                <property name="halign">center</property>
+                <child>
+                  <object class="GtkSearchEntry" id="searchEntry">
+                    <property name="placeholder-text" translatable="yes">Search applications</property>
+                    <property name="width-request">360</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkDropDown" id="typeFilterDropdown">
+                    <property name="tooltip-text" translatable="yes">Filter by type</property>
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <items>
+                          <item translatable="yes">All</item>
+                          <item translatable="yes">Flatpak</item>
+                          <item translatable="yes">Snap</item>
+                          <item translatable="yes">AppImage</item>
+                          <item translatable="yes">System</item>
+                          <item translatable="yes">User</item>
+                          <item translatable="yes">Unknown</item>
+                        </items>
+                      </object>
+                    </property>
+                  </object>
+                </child>
               </object>
-            </property>
+            </child>
+          </object>
+        </child>
+        <property name="content">
+          <object class="GtkBox">
+            <property name="orientation">vertical</property>
+            <child>
+              <object class="GtkScrolledWindow">
+                <property name="vexpand">True</property>
+                <property name="hscrollbar_policy">never</property>
+                <property name="child">
+                  <object class="GtkListBox" id="appsListBox">
+                    <property name="selection-mode">none</property>
+                    <property name="margin-start">12</property>
+                    <property name="margin-end">12</property>
+                    <property name="margin-top">6</property>
+                    <property name="margin-bottom">12</property>
+                    <style>
+                      <class name="boxed-list"/>
+                    </style>
+                  </object>
+                </property>
+              </object>
+            </child>
           </object>
         </property>
       </object>
@@ -47,6 +98,18 @@
         <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
         <attribute name="action">app.shortcuts</attribute>
       </item>
+    </section>
+    <section>
+      <item>
+        <attribute name="label" translatable="yes">View on _GitHub</attribute>
+        <attribute name="action">app.github</attribute>
+      </item>
+      <item>
+        <attribute name="label" translatable="yes">_Donate</attribute>
+        <attribute name="action">app.donate</attribute>
+      </item>
+    </section>
+    <section>
       <item>
         <attribute name="label" translatable="yes">_About Terminator</attribute>
         <attribute name="action">app.about</attribute>

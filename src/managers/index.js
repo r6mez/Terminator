@@ -1,4 +1,5 @@
 import Gio from 'gi://Gio';
+import GioUnix from 'gi://GioUnix?version=2.0';
 import GLib from 'gi://GLib';
 import Adw from 'gi://Adw';
 
@@ -8,7 +9,7 @@ import { uninstallSystemPackage } from './systemPackage.js';
 import { uninstallUserLocal } from './userLocal.js';
 import { uninstallAppImage, isAppImage, resolveAppImageBinary } from './appImage.js';
 
-const AppType = {
+export const AppType = {
     SYSTEM_PACKAGE: 'system-package',
     FLATPAK: 'flatpak',
     SNAP: 'snap',
@@ -17,6 +18,19 @@ const AppType = {
     UNKNOWN: 'unknown'
 };
 
+const APP_TYPE_LABELS = {
+    [AppType.SYSTEM_PACKAGE]: 'System',
+    [AppType.FLATPAK]: 'Flatpak',
+    [AppType.SNAP]: 'Snap',
+    [AppType.USER_LOCAL]: 'User',
+    [AppType.APPIMAGE]: 'AppImage',
+    [AppType.UNKNOWN]: 'Unknown',
+};
+
+export function getAppTypeLabel(type) {
+    return APP_TYPE_LABELS[type] ?? 'Unknown';
+}
+
 const UNINSTALLERS = {
     [AppType.SYSTEM_PACKAGE]: uninstallSystemPackage,
     [AppType.FLATPAK]: uninstallFlatpak,
@@ -24,8 +38,9 @@ const UNINSTALLERS = {
     [AppType.USER_LOCAL]: uninstallUserLocal,
 };
 
-function classifyAppType(desktopFilePath) {
-    const info = Gio.DesktopAppInfo.new_from_filename(desktopFilePath);
+export function classifyAppType(desktopFilePath) {
+    if (!desktopFilePath) return AppType.UNKNOWN;
+    const info = GioUnix.DesktopAppInfo.new_from_filename(desktopFilePath);
     if (!info) return AppType.UNKNOWN;
 
     if (info.has_key('X-Flatpak')) return AppType.FLATPAK;
