@@ -14,7 +14,8 @@
         "--socket=fallback-x11",
         "--device=dri",
         "--socket=wayland",
-        "--talk-name=org.freedesktop.PackageKit"
+        "--talk-name=org.freedesktop.PackageKit",
+        "--filesystem=/run/snapd.socket"
     ],
     "build-options" : {
         "append-path" : "/usr/lib/sdk/typescript/bin:/usr/lib/sdk/node20/bin"

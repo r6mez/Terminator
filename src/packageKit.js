@@ -2,6 +2,8 @@ import Gio from 'gi://Gio';
 import GLib from 'gi://GLib';
 import Adw from 'gi://Adw';
 
+import { getSnapName, uninstallSnap } from './snap.js';
+
 const PACKAGEKIT_BUS_NAME = 'org.freedesktop.PackageKit';
 const PACKAGEKIT_OBJECT_PATH = '/org/freedesktop/PackageKit';
 const PACKAGEKIT_INTERFACE = 'org.freedesktop.PackageKit';
@@ -37,30 +39,6 @@ function classifyAppType(desktopFilePath) {
 function getFlatpakAppId(desktopFilePath) {
     const basename = GLib.path_get_basename(desktopFilePath);
     return basename.replace('.desktop', '');
-}
-
-function getSnapName(desktopFilePath) {
-    try {
-        const file = Gio.File.new_for_path(desktopFilePath);
-        const [success, contents] = file.load_contents(null);
-        
-        if (!success) {
-            return null;
-        }
-        
-        const text = new TextDecoder().decode(contents);
-        const lines = text.split('\n');
-        
-        for (const line of lines) {
-            if (line.startsWith('X-SnapInstanceName=')) {
-                return line.split('=')[1].trim();
-            }
-        }
-
-        throw new Error('X-SnapInstanceName not found');
-    } catch (e) {
-        console.error('Failed to parse snap desktop file:', e);
-    }
 }
 
 function dbusCallAsync(connection, busName, objectPath, iface, method, params, replyType) {
@@ -291,15 +269,6 @@ async function uninstallFlatpak(appId) {
     }
 
     throw new Error('Flatpak uninstall failed. The app may not be installed.');
-}
-
-// Uninstall a Snap app
-async function uninstallSnap(appName) {
-    const success = await runSubprocess(['pkexec', 'snap', 'remove', appName]);
-    if (!success) {
-        throw new Error('Snap removal failed');
-    }
-    return true;
 }
 
 // currently only deletes the desktop file, but we could expand this in the future to also
