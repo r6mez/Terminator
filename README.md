@@ -20,7 +20,7 @@ meson compile -C build
 meson install -C build
 
 # or run directly from the build directory without installing
-./build/src/org.ramez.terminator
+./build/data/org.ramez.terminator
 ```
 
 ### Dependencies

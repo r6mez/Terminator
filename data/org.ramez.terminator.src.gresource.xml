@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/org/ramez/terminator/js">
+    <file>main.js</file>
+    <file>ui/window.js</file>
+    <file>ui/appsList.js</file>
+    <file>managers/index.js</file>
+    <file>managers/snap.js</file>
+    <file>managers/flatpak.js</file>
+    <file>managers/systemPackage.js</file>
+    <file>managers/userLocal.js</file>
+  </gresource>
+</gresources>

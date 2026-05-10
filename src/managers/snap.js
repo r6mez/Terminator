@@ -80,7 +80,8 @@ async function waitForSnapdChange(changeId) {
     }
 }
 
-export async function uninstallSnap(appName) {
+export async function uninstallSnap(desktopFilePath) {
+    const appName = getSnapName(desktopFilePath);
     const { status, body } = await snapdRequest(
         'POST', `/v2/snaps/${encodeURIComponent(appName)}`, { action: 'remove' },
     );

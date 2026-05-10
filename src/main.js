@@ -23,7 +23,7 @@ import Gio from 'gi://Gio';
 import Gtk from 'gi://Gtk?version=4.0';
 import Adw from 'gi://Adw?version=1';
 
-import { TerminatorWindow } from './window.js';
+import { TerminatorWindow } from './ui/window.js';
 
 pkg.initGettext();
 pkg.initFormat();
