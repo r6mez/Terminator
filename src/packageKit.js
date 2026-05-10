@@ -11,28 +11,25 @@ const DEFAULT_TIMEOUT = -1; // 25 seconds
 const DEFAULT_CANCELLABLE = null; // not cancellable
 
 const AppType = {
-    SYSTEM_PACKAGE: 'system-package',   // /usr/share/applications
-    FLATPAK: 'flatpak',                 // contains flatpak in path
-    SNAP: 'snap',                       // /var/lib/snapd/
-    USER_LOCAL: 'user-local',           // ~/.local/share/applications/
+    SYSTEM_PACKAGE: 'system-package',
+    FLATPAK: 'flatpak',
+    SNAP: 'snap',
+    USER_LOCAL: 'user-local',
     UNKNOWN: 'unknown'
 };
 
-function detectAppType(desktopFilePath) {
-    if (desktopFilePath.includes('flatpak')) {
-        return AppType.FLATPAK;
-    }
-    if (desktopFilePath.includes('snap')) {
-        return AppType.SNAP;
-    }
-    if (desktopFilePath.includes('usr/share/applications')) {
-        return AppType.SYSTEM_PACKAGE;
-    }
-    if (desktopFilePath.includes('.local/share/applications')) {
-        return AppType.USER_LOCAL;
-    }
+function classifyAppType(desktopFilePath) {
+    const info = Gio.DesktopAppInfo.new_from_filename(desktopFilePath);
+    if(!info) return AppType.UNKNOWN;
 
-    return AppType.UNKNOWN;
+    if (info.has_key('X-Flatpak')) return AppType.FLATPAK;
+    
+    if (info.has_key('X-SnapInstanceName')) return AppType.SNAP;
+
+    const userDir = GLib.build_filenamev([GLib.get_user_data_dir(), 'applications']);
+    if (desktopFilePath.startsWith(userDir)) return AppType.USER_LOCAL;
+
+    return AppType.SYSTEM_PACKAGE;
 }
 
 // /var/lib/flatpak/exports/share/applications/org.gnome.Calculator.desktop 
@@ -298,7 +295,7 @@ export function uninstallApp(parentWindow, appName, desktopId, desktopFilePath, 
     console.log(`Requesting uninstall for: ${desktopId}`);
     console.log(`Desktop file path: ${desktopFilePath}`);
 
-    const appType = detectAppType(desktopFilePath);
+    const appType = classifyAppType(desktopFilePath);
     console.log(`Detected app type: ${appType}`);
 
     // Check if we can uninstall this app type
