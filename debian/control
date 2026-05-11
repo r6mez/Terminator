@@ -1,4 +1,4 @@
-Source: terminator
+Source: app-terminator
 Section: gnome
 Priority: optional
 Maintainer: Ramez Medhat <iramezdev@gmail.com>
@@ -17,7 +17,7 @@ Standards-Version: 4.6.2
 Homepage: https://github.com/r6mez/Terminator
 Rules-Requires-Root: no
 
-Package: terminator
+Package: app-terminator
 Architecture: all
 Depends:
  ${misc:Depends},

@@ -1,5 +1,5 @@
 # Maintainer: Ramez Medhat <iramezdev@gmail.com>
-pkgname=terminator
+pkgname=app-terminator
 pkgver=0.1.0
 pkgrel=1
 pkgdesc="Unified GTK4/libadwaita manager for installed applications across system packages, Flatpak, Snap, and AppImage"

@@ -1,4 +1,4 @@
-Name:           terminator
+Name:           app-terminator
 Version:        0.1.0
 Release:        1%{?dist}
 Summary:        Unified manager for installed applications (system, Flatpak, Snap, AppImage)

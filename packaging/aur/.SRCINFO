@@ -1,4 +1,4 @@
-pkgbase = terminator
+pkgbase = app-terminator
 	pkgdesc = Unified GTK4/libadwaita manager for installed applications across system packages, Flatpak, Snap, and AppImage
 	pkgver = 0.1.0
 	pkgrel = 1
@@ -16,7 +16,7 @@ pkgbase = terminator
 	depends = glib2
 	depends = packagekit
 	depends = polkit-gnome
-	source = terminator-0.1.0.tar.gz::https://github.com/r6mez/Terminator/archive/refs/tags/v0.1.0.tar.gz
+	source = app-terminator-0.1.0.tar.gz::https://github.com/r6mez/Terminator/archive/refs/tags/v0.1.0.tar.gz
 	sha256sums = SKIP
 
-pkgname = terminator
+pkgname = app-terminator
