@@ -13,7 +13,7 @@ BuildRequires:  meson >= 1.0.0
 BuildRequires:  ninja-build
 BuildRequires:  gettext
 BuildRequires:  gjs
-BuildRequires:  /usr/bin/appstreamcli
+BuildRequires:  appstream
 BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(gtk4)
 BuildRequires:  pkgconfig(libadwaita-1)
@@ -33,7 +33,7 @@ Snap, AppImage, and user-local desktop entries — in a single interface,
 and lets you uninstall any of them.
 
 %prep
-%autosetup -n Terminator-%{version}
+%autosetup -n %{name}-%{version}
 
 %build
 %meson
@@ -58,5 +58,5 @@ and lets you uninstall any of them.
 %{_datadir}/terminator/
 
 %changelog
-* Sun May 11 2026 Ramez Medhat <iramezdev@gmail.com> - 0.1.0-1
+* Mon May 11 2026 Ramez Medhat <iramezdev@gmail.com> - 0.1.0-1
 - Initial package
