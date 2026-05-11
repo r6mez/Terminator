@@ -1,0 +1,33 @@
+Source: terminator
+Section: gnome
+Priority: optional
+Maintainer: Ramez Medhat <iramezdev@gmail.com>
+Build-Depends:
+ debhelper-compat (= 13),
+ meson (>= 1.0.0),
+ ninja-build,
+ gettext,
+ gjs,
+ appstream,
+ desktop-file-utils,
+ libgtk-4-dev,
+ libadwaita-1-dev,
+ libglib2.0-dev
+Standards-Version: 4.6.2
+Homepage: https://github.com/r6mez/Terminator
+Rules-Requires-Root: no
+
+Package: terminator
+Architecture: all
+Depends:
+ ${misc:Depends},
+ gjs,
+ libgtk-4-1,
+ libadwaita-1-0,
+ packagekit,
+ policykit-1-gnome
+Description: Unified manager for installed applications
+ Terminator is a GTK4/libadwaita application that lists installed apps from
+ multiple Linux packaging systems — system packages (via PackageKit),
+ Flatpak, Snap, AppImage, and user-local desktop entries — in a single
+ interface, and lets you uninstall any of them.
