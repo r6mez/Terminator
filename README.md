@@ -31,7 +31,7 @@ Or with any other AUR helper (`paru`, `pikaur`, etc.).
 
 ```bash
 # add the repository for Terminator
-sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/r6mez/Fedora_$(rpm -E %fedora)/home:r6mez.repo
+sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/repositories/home:/r6mez/Fedora_$(rpm -E %fedora)_standard/home:r6mez.repo
 
 # install the app-terminator package
 sudo dnf install app-terminator
