@@ -7,10 +7,10 @@
     <param name="revision">v0.1.0</param>
     <param name="filename">app-terminator</param>
   </service>
-  <service name="tar" mode="buildtime"/>
-  <service name="recompress" mode="buildtime">
+  <service name="tar"/>
+  <service name="recompress">
     <param name="file">*.tar</param>
     <param name="compression">gz</param>
   </service>
-  <service name="set_version" mode="buildtime"/>
+  <service name="set_version"/>
 </services>
