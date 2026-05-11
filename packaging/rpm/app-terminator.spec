@@ -41,12 +41,11 @@ and lets you uninstall any of them.
 
 %install
 %meson_install
-%find_lang %{name} || touch %{name}.lang
 
 %check
 %meson_test || true
 
-%files -f %{name}.lang
+%files
 %license COPYING
 %doc README.md
 %{_bindir}/org.ramez.terminator
