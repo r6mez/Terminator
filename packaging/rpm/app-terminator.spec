@@ -24,7 +24,6 @@ Requires:       gtk4
 Requires:       libadwaita
 Requires:       glib2
 Requires:       PackageKit
-Requires:       polkit-gnome
 
 %description
 Terminator is a GTK4/libadwaita application that lists installed apps from
