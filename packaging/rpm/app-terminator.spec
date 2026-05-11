@@ -4,8 +4,8 @@ Release:        1%{?dist}
 Summary:        Unified manager for installed applications (system, Flatpak, Snap, AppImage)
 
 License:        GPL-3.0-or-later
-URL:            https://github.com/r6mez/Terminator
-Source0:        https://github.com/r6mez/Terminator/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
+URL:            https://github.com/r6mez/App-Terminator
+Source0:        https://github.com/r6mez/App-Terminator/archive/refs/tags/v%{version}.tar.gz#/%{name}-%{version}.tar.gz
 
 BuildArch:      noarch
 

@@ -14,7 +14,7 @@ Build-Depends:
  libadwaita-1-dev,
  libglib2.0-dev
 Standards-Version: 4.6.2
-Homepage: https://github.com/r6mez/Terminator
+Homepage: https://github.com/r6mez/App-Terminator
 Rules-Requires-Root: no
 
 Package: app-terminator

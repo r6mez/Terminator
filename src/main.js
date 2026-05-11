@@ -62,7 +62,7 @@ export const TerminatorApplication = GObject.registerClass(
             });
             this.add_action(show_about_action);
 
-            this._addUriAction('github', 'https://github.com/r6mez/Terminator');
+            this._addUriAction('github', 'https://github.com/r6mez/App-Terminator');
             this._addUriAction('donate', 'https://github.com/sponsors/r6mez');
         }
 

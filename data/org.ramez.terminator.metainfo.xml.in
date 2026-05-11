@@ -26,11 +26,11 @@
     <name>Ramez Medhat</name>
   </developer>
 
-  <url type="homepage">https://github.com/r6mez/Terminator</url>
-  <url type="vcs-browser">https://github.com/r6mez/Terminator</url>
-  <url type="bugtracker">https://github.com/r6mez/Terminator/issues</url>
+  <url type="homepage">https://github.com/r6mez/App-Terminator</url>
+  <url type="vcs-browser">https://github.com/r6mez/App-Terminator</url>
+  <url type="bugtracker">https://github.com/r6mez/App-Terminator/issues</url>
   <url type="donation">https://github.com/sponsors/r6mez</url>
-  <url type="contribute">https://github.com/r6mez/Terminator</url>
+  <url type="contribute">https://github.com/r6mez/App-Terminator</url>
 
   <translation type="gettext">terminator</translation>
   <launchable type="desktop-id">org.ramez.terminator.desktop</launchable>
@@ -43,7 +43,7 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/r6mez/Terminator/master/assets/banner.png</image>
+      <image>https://raw.githubusercontent.com/r6mez/App-Terminator/master/assets/banner.png</image>
       <caption>Main window listing installed applications</caption>
     </screenshot>
   </screenshots>

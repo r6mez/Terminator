@@ -39,11 +39,11 @@ sudo dnf install app-terminator
 
 ### Ubuntu / Debian / Mint / Pop!_OS / Zorin OS
 
-Download the latest `.deb` from the [releases page](https://github.com/r6mez/Terminator/releases/latest) and install it:
+Download the latest `.deb` from the [releases page](https://github.com/r6mez/App-Terminator/releases/latest) and install it:
 
 ```bash
 # downloads the latest .deb file from the releases page
-wget https://github.com/r6mez/Terminator/releases/latest/download/app-terminator_0.1.0-1_all.deb
+wget https://github.com/r6mez/App-Terminator/releases/latest/download/app-terminator_0.1.0-1_all.deb
 
 # install the downloaded .deb file
 sudo apt install ./app-terminator_0.1.0-1_all.deb

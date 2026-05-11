@@ -1,7 +1,7 @@
 <services>
   <service name="obs_scm">
     <param name="scm">git</param>
-    <param name="url">https://github.com/r6mez/Terminator.git</param>
+    <param name="url">https://github.com/r6mez/App-Terminator.git</param>
     <param name="versionformat">@PARENT_TAG@</param>
     <param name="versionrewrite-pattern">v(.*)</param>
     <param name="revision">v0.1.0</param>

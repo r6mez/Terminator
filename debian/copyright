@@ -1,7 +1,7 @@
 Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: app-terminator
 Upstream-Contact: Ramez Medhat <iramezdev@gmail.com>
-Source: https://github.com/r6mez/Terminator
+Source: https://github.com/r6mez/App-Terminator
 
 Files: *
 Copyright: 2026 Ramez Medhat <iramezdev@gmail.com>
