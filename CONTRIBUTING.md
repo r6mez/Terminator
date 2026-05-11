@@ -14,19 +14,19 @@ You'll need `meson`, `gjs`, and a few GNOME libraries installed before building.
 #### Arch Linux
 
 ```bash
-sudo pacman -S meson gjs gtk4 libadwaita packagekit polkit-gnome
+sudo pacman -S meson gjs gtk4 libadwaita packagekit
 ```
 
 #### Fedora
 
 ```bash
-sudo dnf install meson gjs gtk4 libadwaita PackageKit polkit-gnome
+sudo dnf install meson gjs gtk4 libadwaita PackageKit
 ```
 
 #### Ubuntu / Debian
 
 ```bash
-sudo apt install meson gjs libgtk-4-1 libadwaita-1-0 packagekit policykit-1-gnome
+sudo apt install meson gjs libgtk-4-1 libadwaita-1-0 packagekit
 ```
 
 ### 3. Build and run
@@ -53,4 +53,8 @@ sudo meson install -C build
 - gtk4
 - libadwaita
 - packagekit (for uninstalling system packages)
-- polkit-gnome (for authentication dialogs)
+
+The authentication dialog shown when PackageKit prompts for privileges
+is provided by your desktop environment's polkit agent (built into
+gnome-shell on GNOME, polkit-kde-agent on KDE, etc.) — no extra package
+needed.
