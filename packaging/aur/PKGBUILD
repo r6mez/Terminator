@@ -22,7 +22,7 @@ makedepends=(
   'desktop-file-utils'
 )
 source=("$pkgname-$pkgver.tar.gz::https://github.com/r6mez/Terminator/archive/refs/tags/v$pkgver.tar.gz")
-sha256sums=('SKIP')
+sha256sums=('ea64e743e7fa758ffaa041fad279fa3f7bf64fdda571ff6cec62b0ac8b2ccbe2')
 
 build() {
   arch-meson "Terminator-$pkgver" build
