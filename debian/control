@@ -24,8 +24,7 @@ Depends:
  gjs,
  libgtk-4-1,
  libadwaita-1-0,
- packagekit,
- policykit-1-gnome
+ packagekit
 Description: Unified manager for installed applications
  Terminator is a GTK4/libadwaita application that lists installed apps from
  multiple Linux packaging systems — system packages (via PackageKit),

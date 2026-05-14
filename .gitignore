@@ -1,5 +1,6 @@
 .vscode/
 build/
+local-docs/
 
 # makepkg / AUR build artifacts
 packaging/aur/src/

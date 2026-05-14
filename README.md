@@ -37,7 +37,15 @@ sudo dnf config-manager addrepo --from-repofile=https://download.opensuse.org/re
 sudo dnf install app-terminator
 ```
 
-### Ubuntu / Debian / Mint / Pop!_OS / Zorin OS
+### Ubuntu 24.04+ / Pop!_OS 24.04+ / Mint 22+ / Zorin OS 18+
+
+```bash
+sudo add-apt-repository ppa:r6mez/app-terminator
+sudo apt update
+sudo apt install app-terminator
+```
+
+### Debian
 
 Download the latest `.deb` from the [releases page](https://github.com/r6mez/App-Terminator/releases/latest) and install it:
 
