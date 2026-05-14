@@ -1,3 +1,11 @@
+app-terminator (0.1.0-2~noble1) noble; urgency=medium
+
+  * Add gir1.2-gtk-4.0 and gir1.2-adw-1 to Depends so GJS can locate the
+    GTK4/libadwaita typelibs at runtime (fixes app failing to launch on
+    minimal Ubuntu).
+
+ -- Ramez Medhat <iramezdev@gmail.com>  Thu, 14 May 2026 21:24:46 +0300
+
 app-terminator (0.1.0-1~noble1) noble; urgency=medium
 
   * Initial PPA release.
